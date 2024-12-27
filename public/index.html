@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twitter Trends</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #results {
+            margin-top: 20px;
+        }
+        .json-extract {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Twitter Trends</h1>
+    <button onclick="runScript()">Click here to run the script</button>
+    <div id="results"></div>
+
+    <script>
+        async function runScript() {
+            const resultsDiv = document.getElementById("results");
+            resultsDiv.innerHTML = "Running script, please wait...";
+            try {
+                const response = await fetch("/run-script");
+                const data = await response.json();
+
+                const trendsHTML = `
+                    <h3>These are the most happening topics as on ${data.date_time}</h3>
+                    <ul>
+                        <li>${data.nameoftrend1}</li>
+                        <li>${data.nameoftrend2}</li>
+                        <li>${data.nameoftrend3}</li>
+                        <li>${data.nameoftrend4}</li>
+                        <li>${data.nameoftrend5}</li>
+                    </ul>
+                    <p>The IP address used for this query was ${data.ip_address}.</p>
+                    <h4>JSON Extract:</h4>
+                    <div class="json-extract"><pre>${JSON.stringify(data, null, 2)}</pre></div>
+                    <button onclick="runScript()">Click here to run the query again</button>
+                `;
+                resultsDiv.innerHTML = trendsHTML;
+            } catch (err) {
+                resultsDiv.innerHTML = "Error running script. Please try again.";
+                console.error(err);
+            }
+        }
+    </script>
+</body>
+</html>
+

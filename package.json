@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "chromedriver": "^131.0.4",
+    "express": "^4.21.2",
+    "mongodb": "^6.12.0",
+    "selenium-webdriver": "^4.27.0",
+    "uuid": "^11.0.3"
+  }
+}
