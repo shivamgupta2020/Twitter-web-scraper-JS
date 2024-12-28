@@ -3,6 +3,8 @@ const { MongoClient } = require("mongodb");
 const { v4: uuidv4 } = require("uuid");
 const chrome = require("selenium-webdriver/chrome");
 require("chromedriver");
+const fs = require('fs');
+
 
 const PROXY = "http://VELLAforu:Qwerty4u@us-ca.proxymesh.com:31280";
 const TWITTER_USERNAME = "@yarad245490";
@@ -33,7 +35,7 @@ async function scrapeTwitterTrends() {
         console.log("Driver is ready");
         await driver.get("https://x.com/i/flow/login");
         console.log("X page loaded");
-
+ 
         await driver.wait(until.elementLocated(By.name("text")), 10000);
         await driver.findElement(By.name("text")).sendKeys(TWITTER_USERNAME);
         console.log("Username entered");
@@ -81,7 +83,38 @@ async function scrapeTwitterTrends() {
         //reload the page
         await driver.navigate().refresh();
         console.log("Page refreshed");
-        console.log(until.elementsLocated(By.xpath('//*[@data-testid="trend"]')));
+        // console.log(until.elementsLocated(By.xpath('//*[@data-testid="trend"]')));
+        await driver.sleep(5000);
+
+        let screenshot = await driver.takeScreenshot();
+
+        // Step 4: Save the screenshot as a temporary file (optional)
+        const screenshotPath = 'screenshot.png';
+        fs.writeFileSync(screenshotPath, screenshot, 'base64');
+
+        // Step 5: Upload the screenshot to Imgur using fetch
+        const clientId = 'e1167d62d0ac922'; // Replace with your Imgur Client ID
+        const imgurResponse = await fetch('https://api.imgur.com/3/image', {
+            method: 'POST',
+            headers: {
+                Authorization: `Client-ID ${clientId}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                image: screenshot, // Send screenshot as base64
+                type: 'base64',    // Specify the type as base64
+            }),
+        });
+
+        // Step 6: Process the response
+        if (!imgurResponse.ok) {
+            throw new Error(`Error uploading image: ${imgurResponse.statusText}`);
+        }
+
+        const imgurData = await imgurResponse.json();
+        console.log('Image uploaded to Imgur:', imgurData.data.link);
+
+
         await driver.wait(until.elementsLocated(By.xpath('//*[@data-testid="trend"]')), 10000);
         const trendElements = await driver.findElements(By.xpath('//*[@data-testid="trend"]'));
         console.log("Trend elements found:", trendElements);
