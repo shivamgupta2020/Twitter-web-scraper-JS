@@ -2,7 +2,7 @@ const express = require("express");
 const { scrapeTwitterTrends } = require("./scrapeTwitterTrends"); 
 
 const app = express();
-const PORT = 3000;
+const PORT = 10000;
 
 app.use(express.static("public"));
 
