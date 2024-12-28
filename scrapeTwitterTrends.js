@@ -5,8 +5,8 @@ const chrome = require("selenium-webdriver/chrome");
 require("chromedriver");
 
 const PROXY = "http://VELLAforu:Qwerty4u@us-ca.proxymesh.com:31280";
-const TWITTER_USERNAME = "0Videh283021";
-const TWITTER_PASSWORD = "Qwerty@4u";
+const TWITTER_USERNAME = "@yarad245490";
+const TWITTER_PASSWORD = "Qwerty4u";
 const MONGO_URL = "mongodb+srv://shivamguptaece21:VnJZyH4XjcEH6ECc@cluster0.xmgpu.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 const DB_NAME = "twitter_trends";
 const COLLECTION_NAME = "trends";
@@ -19,7 +19,7 @@ async function scrapeTwitterTrends() {
 
         const options = new chrome.Options();
         //headless
-        options.addArguments("--headless");
+        // options.addArguments("--headless");
         //no-sandbox
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-gpu");
