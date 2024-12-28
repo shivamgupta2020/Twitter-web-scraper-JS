@@ -19,7 +19,7 @@ async function scrapeTwitterTrends() {
         console.log("Driver is starting");
 
         const options = new chrome.Options();
-        // options.addArguments("--headless");
+        options.addArguments("--headless");
         options.addArguments("--window-size=1920,1080")
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-gpu");
