@@ -74,10 +74,17 @@ async function scrapeTwitterTrends() {
         }
 
         await driver.sleep(5000);
-        await driver.get("https://x.com/explore/tabs/for-you");
-        console.log("For you tab loaded");
-        await driver.wait(until.elementsLocated(By.css('[aria-labelledby]')));
+        await driver.get("https://x.com/explore");
+        console.log("Explore tab loaded");
+        //reload the page to get the latest trends after 5 seconds
+        await driver.sleep(5000);
+        //reload the page
+        await driver.navigate().refresh();
+        console.log("Page refreshed");
+        driver.sleep(5000);
 
+        await driver.wait(until.elementsLocated(By.css('[aria-labelledby]')));
+        
         const trendElements = await driver.findElements(By.xpath('//*[@data-testid="trend"]'));
         console.log("Trend elements found");
 
