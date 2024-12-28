@@ -19,7 +19,7 @@ async function scrapeTwitterTrends() {
 
         const options = new chrome.Options();
         //headless
-        // options.addArguments("--headless");
+        options.addArguments("--headless");
         //no-sandbox
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-gpu");
