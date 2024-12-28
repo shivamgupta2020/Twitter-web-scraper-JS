@@ -33,20 +33,28 @@ async function scrapeTwitterTrends() {
         .build();
         console.log("Driver is ready");
         await driver.get("https://x.com/i/flow/login");
+        console.log("X page loaded");
 
         await driver.wait(until.elementLocated(By.name("text")));
         await driver.findElement(By.name("text")).sendKeys(TWITTER_USERNAME);
+        console.log("Username entered");
         await driver.findElement(By.xpath('//*[@id="layers"]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div/div/button[2]')).click();
+        console.log("Next button clicked");
 
         await driver.wait(until.elementLocated(By.name("password")));
         await driver.findElement(By.name("password")).sendKeys(TWITTER_PASSWORD);
+        console.log("Password entered");
         await driver.findElement(By.xpath('//*[@id="layers"]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[2]/div/div[1]/div/div/button')).click();
+        console.log("Login button clicked");
 
         await driver.wait(until.elementLocated(By.tagName("section")));
         await driver.get("https://x.com/explore/tabs/for-you");
+        console.log("For you tab loaded");
         await driver.wait(until.elementsLocated(By.css('[aria-labelledby]')));
 
+
         const trendElements = await driver.findElements(By.xpath('//*[@data-testid="trend"]'));
+        console.log("Trend elements found");
 
         const trends = [];
         for (let i = 0; i < Math.min(trendElements.length, 5); i++) {
