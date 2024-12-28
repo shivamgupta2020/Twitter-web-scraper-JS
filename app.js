@@ -7,7 +7,6 @@ const PORT = 10000;
 app.use(express.static("public"));
 
 app.get("/run-script", async (req, res) => {
-    req.setTimeout(300000);
     try {
         const result = await scrapeTwitterTrends();
         if (result) {
