@@ -22,7 +22,9 @@ async function scrapeTwitterTrends() {
         options.addArguments("--headless");
         //no-sandbox
         options.addArguments("--no-sandbox");
+        options.addArguments("--disable-gpu");
         console.log("Sandbox is ready");
+
         //disable-dev-shm-usage
         options.addArguments("--disable-dev-shm-usage");
         const driver = await new Builder()
@@ -32,17 +34,17 @@ async function scrapeTwitterTrends() {
         console.log("Driver is ready");
         await driver.get("https://x.com/i/flow/login");
 
-        await driver.wait(until.elementLocated(By.name("text")), 100000);
+        await driver.wait(until.elementLocated(By.name("text")), 10000);
         await driver.findElement(By.name("text")).sendKeys(TWITTER_USERNAME);
         await driver.findElement(By.xpath('//*[@id="layers"]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div/div/button[2]')).click();
 
-        await driver.wait(until.elementLocated(By.name("password")), 100000);
+        await driver.wait(until.elementLocated(By.name("password")), 10000);
         await driver.findElement(By.name("password")).sendKeys(TWITTER_PASSWORD);
         await driver.findElement(By.xpath('//*[@id="layers"]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[2]/div/div[1]/div/div/button')).click();
 
-        await driver.wait(until.elementLocated(By.tagName("section")), 150000);
+        await driver.wait(until.elementLocated(By.tagName("section")), 15000);
         await driver.get("https://x.com/explore/tabs/for-you");
-        await driver.wait(until.elementsLocated(By.css('[aria-labelledby]')), 100000);
+        await driver.wait(until.elementsLocated(By.css('[aria-labelledby]')), 10000);
 
         const trendElements = await driver.findElements(By.xpath('//*[@data-testid="trend"]'));
 
