@@ -13,7 +13,7 @@ app.get("/run-script", async (req, res) => {
             res.json(result);
         } else {
             res.status(500).send("Error fetching trends.");
-        }
+        }                                                                                                                                                                                                               
     } catch (error) {
         console.error("Error in /run-script endpoint:", error);
         res.status(500).send("Internal server error.");

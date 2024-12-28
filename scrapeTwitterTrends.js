@@ -16,7 +16,12 @@ async function scrapeTwitterTrends() {
 
     try {
         const options = new chrome.Options();
-
+        //headless
+        options.addArguments("--headless");
+        //no-sandbox
+        options.addArguments("--no-sandbox");
+        //disable-dev-shm-usage
+        options.addArguments("--disable-dev-shm-usage");
         const driver = await new Builder()
             .forBrowser("chrome")
             .setChromeOptions(options)
