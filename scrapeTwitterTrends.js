@@ -47,7 +47,8 @@ async function scrapeTwitterTrends() {
         await driver.findElement(By.xpath('//*[@id="layers"]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[2]/div/div[1]/div/div/button')).click();
         console.log("Login button clicked");
 
-        await driver.wait(until.elementLocated(By.tagName("section")));
+        //wait for 3 seconds
+        await driver.sleep(5000);
         await driver.get("https://x.com/explore/tabs/for-you");
         console.log("For you tab loaded");
         await driver.wait(until.elementsLocated(By.css('[aria-labelledby]')));
