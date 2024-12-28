@@ -86,33 +86,36 @@ async function scrapeTwitterTrends() {
         // console.log(until.elementsLocated(By.xpath('//*[@data-testid="trend"]')));
         await driver.sleep(5000);
 
-        let screenshot = await driver.takeScreenshot();
+        // let screenshot = await driver.takeScreenshot();
 
-        // Step 4: Save the screenshot as a temporary file (optional)
-        const screenshotPath = 'screenshot.png';
-        fs.writeFileSync(screenshotPath, screenshot, 'base64');
+        // // Step 4: Save the screenshot as a temporary file (optional)
+        // const screenshotPath = 'screenshot.png';
+        // fs.writeFileSync(screenshotPath, screenshot, 'base64');
 
-        // Step 5: Upload the screenshot to Imgur using fetch
-        const clientId = 'e1167d62d0ac922'; // Replace with your Imgur Client ID
-        const imgurResponse = await fetch('https://api.imgur.com/3/image', {
-            method: 'POST',
-            headers: {
-                Authorization: `Client-ID ${clientId}`,
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                image: screenshot, // Send screenshot as base64
-                type: 'base64',    // Specify the type as base64
-            }),
-        });
+        // // Step 5: Upload the screenshot to Imgur using fetch
+        // const clientId = 'e1167d62d0ac922'; // Replace with your Imgur Client ID
+        // const imgurResponse = await fetch('https://api.imgur.com/3/image', {
+        //     method: 'POST',
+        //     headers: {
+        //         Authorization: `Client-ID ${clientId}`,
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify({
+        //         image: screenshot, // Send screenshot as base64
+        //         type: 'base64',    // Specify the type as base64
+        //     }),
+        // });
 
-        // Step 6: Process the response
-        if (!imgurResponse.ok) {
-            throw new Error(`Error uploading image: ${imgurResponse.statusText}`);
-        }
+        // // Step 6: Process the response
+        // if (!imgurResponse.ok) {
+        //     throw new Error(`Error uploading image: ${imgurResponse.statusText}`);
+        // }
 
-        const imgurData = await imgurResponse.json();
-        console.log('Image uploaded to Imgur:', imgurData.data.link);
+        // const imgurData = await imgurResponse.json();
+        // console.log('Image uploaded to Imgur:', imgurData.data.link);
+
+        const html = await driver.getPageSource();
+        console.log(html);
 
 
         await driver.wait(until.elementsLocated(By.xpath('//*[@data-testid="trend"]')), 10000);
