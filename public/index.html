@@ -22,7 +22,6 @@
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
-            overflow-x: auto;
         }
     </style>
 </head>
@@ -36,17 +35,8 @@
             const resultsDiv = document.getElementById("results");
             resultsDiv.innerHTML = "Running script, please wait...";
             try {
-                const response = await fetch("https://twitter-web-scraper-js-1.onrender.com/run-script");
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-
+                const response = await fetch("/run-script");
                 const data = await response.json();
-
-                // Ensure the backend data structure is valid
-                if (!data || !data.date_time || !data.nameoftrend1) {
-                    throw new Error("Invalid data format received from server.");
-                }
 
                 const trendsHTML = `
                     <h3>These are the most happening topics as on ${data.date_time}</h3>
@@ -64,13 +54,11 @@
                 `;
                 resultsDiv.innerHTML = trendsHTML;
             } catch (err) {
-                resultsDiv.innerHTML = `
-                    <p style="color: red;">Error running script. Please try again later.</p>
-                    <p><strong>Details:</strong> ${err.message}</p>
-                `;
-                console.error("Script Error:", err);
+                resultsDiv.innerHTML = "Error running script. Please try again.";
+                console.error(err);
             }
         }
     </script>
 </body>
 </html>
+

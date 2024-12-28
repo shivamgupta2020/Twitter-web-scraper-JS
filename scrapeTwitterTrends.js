@@ -15,17 +15,21 @@ async function scrapeTwitterTrends() {
     let driver;
 
     try {
+        console.log("Driver is starting");
+
         const options = new chrome.Options();
         //headless
         options.addArguments("--headless");
         //no-sandbox
         options.addArguments("--no-sandbox");
+        console.log("Sandbox is ready");
         //disable-dev-shm-usage
         options.addArguments("--disable-dev-shm-usage");
         const driver = await new Builder()
-            .forBrowser("chrome")
-            .setChromeOptions(options)
-            .build();
+        .forBrowser("chrome")
+        .setChromeOptions(options)
+        .build();
+        console.log("Driver is ready");
         await driver.get("https://x.com/i/flow/login");
 
         await driver.wait(until.elementLocated(By.name("text")), 10000);

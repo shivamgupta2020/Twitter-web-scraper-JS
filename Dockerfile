@@ -1,20 +1,30 @@
-# FROM ubuntu:22.04
 
 FROM node:20
 
-# Install dependencies and Chrome browser
-# RUN apt-get update
-# RUN apt install unzip
-# COPY chrome_114_amd64.deb ./
-# RUN apt install ./chrome_114_amd64.deb -y
-# RUN wget https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_linux64.zip
-# RUN unzip chromedriver_linux64.zip
-# RUN mv chromedriver /usr/bin/chromedriver
-# RUN google-chrome --version
+RUN apt-get update -qq -y && \
+    apt-get install -y \
+        libasound2 \
+        libatk-bridge2.0-0 \
+        libgtk-4-1 \
+        libnss3 \
+        xdg-utils \
+        wget && \
+    wget -q -O chrome-linux64.zip https://storage.googleapis.com/chrome-for-testing-public/131.0.6778.204/linux64/chrome-linux64.zip && \
+    unzip chrome-linux64.zip && \
+    rm chrome-linux64.zip && \
+    mv chrome-linux64 /opt/chrome/ && \
+    ln -s /opt/chrome/chrome /usr/local/bin/ && \
+    wget -q -O chromedriver-linux64.zip https://storage.googleapis.com/chrome-for-testing-public/131.0.6778.204/linux64/chromedriver-linux64.zip && \
+    unzip -j chromedriver-linux64.zip chromedriver-linux64/chromedriver && \
+    rm chromedriver-linux64.zip && \
+    mv chromedriver /usr/local/bin/
+
 WORKDIR /app
 
 # Copy package.json and package-lock.json
 COPY package*.json ./
+
+ENV CHROMEDRIVER_SKIP_DOWNLOAD=true
 
 # Install dependencies
 RUN npm install
@@ -23,7 +33,7 @@ RUN npm install
 COPY . .
 
 # Expose the port for the server
-EXPOSE 3000
+EXPOSE 10000
 
 # Start the application
 CMD ["node", "app.js"]
