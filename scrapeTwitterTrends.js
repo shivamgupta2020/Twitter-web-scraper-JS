@@ -81,12 +81,10 @@ async function scrapeTwitterTrends() {
         //reload the page
         await driver.navigate().refresh();
         console.log("Page refreshed");
-        driver.sleep(5000);
-
-        await driver.wait(until.elementsLocated(By.xpath('//*[@data-testid="trend"]')));
-        
+        console.log(until.elementsLocated(By.xpath('//*[@data-testid="trend"]')));
+        await driver.wait(until.elementsLocated(By.xpath('//*[@data-testid="trend"]')), 10000);
         const trendElements = await driver.findElements(By.xpath('//*[@data-testid="trend"]'));
-        console.log("Trend elements found");
+        console.log("Trend elements found:", trendElements);
 
         const trends = [];
         for (let i = 0; i < Math.min(trendElements.length, 5); i++) {
