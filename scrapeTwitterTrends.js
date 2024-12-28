@@ -149,6 +149,11 @@ async function scrapeTwitterTrends() {
 
         console.log("Scraped Trends:", record);
 
+        //logout from the account
+        await driver.get("https://x.com/logout");
+        await driver.findElement(By.xpath('/html/body/div/div/div/div[1]/div[2]/div/div/div/div/div/div[2]/div[2]/div[2]/button[1]')).click();
+        console.log("Logout button clicked");
+
         const client = new MongoClient(MONGO_URL);
         await client.connect();
         const db = client.db(DB_NAME);
