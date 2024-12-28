@@ -19,3 +19,5 @@ node app.js
 ```
 http://localhost:10000
 ```
+
+![Screenshot](/screenshot.png)
