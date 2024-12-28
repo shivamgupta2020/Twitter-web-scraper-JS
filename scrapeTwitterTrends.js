@@ -19,7 +19,8 @@ async function scrapeTwitterTrends() {
         console.log("Driver is starting");
 
         const options = new chrome.Options();
-        options.addArguments("--headless");
+        // options.addArguments("--headless");
+        options.addArguments("--window-size=1920,1080")
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-gpu");
         options.addArguments("--disable-dev-shm-usage");
@@ -58,6 +59,19 @@ async function scrapeTwitterTrends() {
         console.log("Password entered");
         await driver.findElement(By.xpath('//*[@id="layers"]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[2]/div/div[1]/div/div/button')).click();
         console.log("Login button clicked");
+
+        try {
+            await driver.sleep(2000); // Give some time for the intermediate page to load
+            const inputField = await driver.findElement(By.css('[data-testid="ocfEnterTextTextInput"]'));
+            if (inputField) {
+                console.log("Intermediate page detected, entering email...");
+                await inputField.sendKeys(VERIFICATION_EMAIL);
+                await driver.findElement(By.xpath('//*[@id="layers"]/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[2]/div/div/div/button')).click();
+                console.log("Intermediate step completed");
+            }
+        } catch (e) {
+            console.log("No intermediate step detected, proceeding to password entry");
+        }
 
         await driver.sleep(5000);
         await driver.get("https://x.com/explore/tabs/for-you");
