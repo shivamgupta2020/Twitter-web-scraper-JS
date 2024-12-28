@@ -118,7 +118,7 @@ async function scrapeTwitterTrends() {
         console.log(html);
 
 
-        await driver.wait(until.elementsLocated(By.xpath('//*[@data-testid="trend"]')), 10000);
+        await driver.wait(until.elementsLocated(By.xpath('//*[@data-testid="trend"]')), 100000);
         const trendElements = await driver.findElements(By.xpath('//*[@data-testid="trend"]'));
         console.log("Trend elements found:", trendElements);
 
